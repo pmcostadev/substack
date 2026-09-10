@@ -1,4 +1,3 @@
-import {readFileSync} from "node:fs";
 import {McpServer} from "@modelcontextprotocol/sdk/server/mcp.js";
 import {createDraftPostSchema, createDraftPostHandler} from "./tools/create_draft_post.js";
 import {setPostBodySchema, setPostBodyHandler} from "./tools/set_post_body.js";
@@ -29,7 +28,9 @@ import {getCommentThreadSchema, getCommentThreadHandler} from "./tools/get_comme
 import {restackItemSchema, restackItemHandler} from "./tools/restack_item.js";
 import {logger} from "./logger.js";
 
-const {version} = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
+// Hardcoded instead of readFileSync(package.json) because Next.js webpack
+// does not resolve import.meta.url to a filesystem path at build time.
+const version = "1.0.0";
 
 export const tools = {
   create_draft_post: {description: "create a draft post on your Substack account.", schema: createDraftPostSchema, handler: createDraftPostHandler},
